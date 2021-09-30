@@ -1,0 +1,98 @@
+Shader "Custom/SnowTracks"
+{
+    Properties
+    {
+        _SnowTex ("Snow (RGB)", 2D) = "white" {}
+        _SnowColor ("Snow Color", Color) = (1,1,1,1)
+
+         _GroundTex ("Ground (RGB)", 2D) = "white" {}
+        _GroundColor ("Ground Color", Color) = (1,1,1,1)
+
+        _Tess ("Tesselation", Range(1,32)) = 4
+        _Splat ("SplatMap", 2D) = "black" {}
+        _Displacement  ("Displacement", Range(0, 1.0)) = 0.3
+        _Displacement2  ("Displacement2", Range(0, 1.0)) = 0.3
+   
+        _Glossiness ("Smoothness", Range(0,1)) = 0.5
+        _Metallic ("Metallic", Range(0,1)) = 0.0
+    }
+    SubShader
+    {
+        Tags { "RenderType"="Opaque" }
+        LOD 200
+
+        CGPROGRAM
+        // Physically based Standard lighting model, and enable shadows on all light types
+        #pragma surface surf Standard fullforwardshadows vertex:disp tessellate:tessDistance
+        #pragma target 4.6
+        #include "Tessellation.cginc"
+
+        struct appdata {
+            float4 vertex : POSITION;
+            float4 tangent : TANGENT;
+            float3 normal : NORMAL;
+            float2 texcoord : TEXCOORD0;
+        };
+
+        float _Tess;
+
+        float4 tessDistance (appdata v0, appdata v1, appdata v2) {
+            float minDist = 10.0;
+            float maxDist = 25.0;
+            return UnityDistanceBasedTess(v0.vertex, v1.vertex, v2.vertex, minDist, maxDist, _Tess);
+        }
+
+        sampler2D _Splat;
+        float _Displacement, _Displacement2;
+
+        void disp (inout appdata v)
+        {
+            float4 coordinate = tex2Dlod(_Splat, float4(v.texcoord.xy,0,0));
+
+            float d = coordinate.r * _Displacement; // snow grooves
+            float d2 = (coordinate.g - coordinate.r) * _Displacement2;
+
+            v.vertex.xyz -= v.normal * d;
+            if(d2 > 0) {
+                v.vertex.xyz += v.normal * d2 + (v.normal * d);
+            }
+           
+            v.vertex.xyz += v.normal * _Displacement; // change the vertex position
+        }
+
+        sampler2D _GroundTex, _SnowTex;
+        fixed4 _SnowColor, _GroundColor;
+
+        struct Input
+        {
+            float2 uv_GroundTex, uv_SnowTex, uv_Splat;
+        };
+
+        half _Glossiness;
+        half _Metallic;
+        fixed4 _Color;
+
+        // Add instancing support for this shader. You need to check 'Enable Instancing' on materials that use the shader.
+        // See https://docs.unity3d.com/Manual/GPUInstancing.html for more information about instancing.
+        // #pragma instancing_options assumeuniformscaling
+        UNITY_INSTANCING_BUFFER_START(Props)
+            // put more per-instance properties here
+        UNITY_INSTANCING_BUFFER_END(Props)
+
+        void surf (Input IN, inout SurfaceOutputStandard o)
+        {
+            // Albedo comes from a texture tinted by color
+
+            half amount = tex2Dlod(_Splat, float4(IN.uv_Splat.xy,0,0)).r;
+            //fixed4 c = tex2D (_MainTex, IN.uv_MainTex) * _Color;
+            fixed4 c = lerp(tex2D (_SnowTex, IN.uv_SnowTex) * _SnowColor, tex2D (_GroundTex, IN.uv_GroundTex) * _GroundColor, amount);
+            o.Albedo = c.rgb;
+            // Metallic and smoothness come from slider variables
+            o.Metallic = _Metallic;
+            o.Smoothness = _Glossiness;
+            o.Alpha = c.a;
+        }
+        ENDCG
+    }
+    FallBack "Diffuse"
+}
