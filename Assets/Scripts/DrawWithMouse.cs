@@ -8,7 +8,7 @@ public class DrawWithMouse : MonoBehaviour
     public Camera _camera;
     public Shader _drawShader;
 
-    private RenderTexture _splatMap;
+    private RenderTexture _splatMap, _HeightMap;
     private Material _snowMaterial, _drawMaterial;
 
     [Range(1,500)]
@@ -55,5 +55,6 @@ public class DrawWithMouse : MonoBehaviour
     private void OnGUI()
     {
         GUI.DrawTexture(new Rect(0, 0, 256, 256), _splatMap, ScaleMode.ScaleToFit, false, 1);
+        GUI.DrawTexture(new Rect(256, 0, 256, 256), _HeightMap, ScaleMode.ScaleToFit, false, 1);
     }
 }

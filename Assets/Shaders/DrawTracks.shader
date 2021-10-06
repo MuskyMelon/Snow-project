@@ -53,11 +53,11 @@ Shader "Unlit/DrawTracks"
             {
                 // sample the texture
                 fixed4 col = tex2D(_MainTex, i.uv);
-                float draw2 = pow(saturate(1 - distance(i.uv, _Coordinate.xy)), (500 / (_Size + _HillOffset)));
+                //float draw2 = pow(saturate(1 - distance(i.uv, _Coordinate.xy)), (500 / (_Size + _HillOffset)));
                 float draw = pow(saturate(1 - distance(i.uv, _Coordinate.xy)), (500 / _Size));
                 fixed4 drawCol = _Color * (draw * _Strength);
-                fixed4 drawCol2 =  _SecondColor * (draw2 * _SecondStrength);
-                return saturate(col + drawCol2 + drawCol);
+                //fixed4 drawCol2 =  _SecondColor * (draw2 * _SecondStrength);
+                return saturate(col  + drawCol);
             }
             ENDCG
         }
