@@ -151,7 +151,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 64300399}
   serializedVersion: 2
-  m_Mass: 0.2
+  m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
@@ -231,7 +231,7 @@ Transform:
   m_GameObject: {fileID: 64300399}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.060714483, y: 1.663, z: 0.154}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 4
@@ -266,17 +266,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d275f4980532bcd41bd5808572af0156, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tempTex: {fileID: 8400000, guid: b53fa44517b1fda44a049aab7b29345d, type: 2}
-  persistentTex: {fileID: 8400000, guid: 479d404c2377ca94a86fae06da6c2278, type: 2}
+  rt: {fileID: 8400000, guid: b53fa44517b1fda44a049aab7b29345d, type: 2}
   target: {fileID: 259240521}
-  _drawShader: {fileID: 4800000, guid: dd26faafdcd4a674e802d1f07f4e3f93, type: 3}
-  _persistentShader: {fileID: 4800000, guid: 25f6db5760b592442b2d9c5e9b94b030, type: 3}
-  _tempMaterial: {fileID: 0}
+  _drawShader: {fileID: 4800000, guid: b9421f83aa3a8b54191e234342f0c027, type: 3}
   _snowMaterial: {fileID: 0}
   _drawMaterial: {fileID: 0}
-  timeInSecForSnowToGenerate: 480
-  regenPerSecond: 1
-  timer: 0
   cam: {fileID: 0}
 --- !u!20 &228887166
 Camera:
@@ -301,17 +295,17 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.2
-  far clip plane: 0.7
+  near clip plane: 4.2
+  far clip plane: 4.7
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 6
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 64
   m_RenderingPath: -1
-  m_TargetTexture: {fileID: 8400000, guid: b53fa44517b1fda44a049aab7b29345d, type: 2}
+  m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 1
   m_TargetEye: 3
   m_HDR: 1
@@ -328,13 +322,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 228887164}
-  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -0.08, y: -0.4, z: -0}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 4.6, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!1 &259240517
 GameObject:
   m_ObjectHideFlags: 0
@@ -347,6 +341,7 @@ GameObject:
   - component: {fileID: 259240520}
   - component: {fileID: 259240519}
   - component: {fileID: 259240518}
+  - component: {fileID: 259240522}
   m_Layer: 0
   m_Name: Plane
   m_TagString: Untagged
@@ -427,11 +422,27 @@ Transform:
   m_GameObject: {fileID: 259240517}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.01887703, y: -0.053733826, z: 0.01887703}
-  m_LocalScale: {x: -1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &259240522
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 259240517}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13e37c48eef59e249b5c98bee6d4e938, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _camera: {fileID: 963194227}
+  _drawShader: {fileID: 4800000, guid: 8cb8e30a1bc1be3459d2a6ac1ccec26c, type: 3}
+  _brushSize: 11.2
+  _brushStrength: 0.054
 --- !u!1 &414819662
 GameObject:
   m_ObjectHideFlags: 0
@@ -522,7 +533,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 414819662}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.060714483, y: 0.352, z: -3.54}
+  m_LocalPosition: {x: 0.060714483, y: 0.51, z: -3.54}
   m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
   m_Children: []
   m_Father: {fileID: 0}
@@ -797,7 +808,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4759721911903040, guid: d6d06c887a1aae94f8c6e8cc2c0c557b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.25
+      value: 0.68
       objectReference: {fileID: 0}
     - target: {fileID: 4759721911903040, guid: d6d06c887a1aae94f8c6e8cc2c0c557b, type: 3}
       propertyPath: m_LocalPosition.z
@@ -831,10 +842,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 95509902755735526, guid: d6d06c887a1aae94f8c6e8cc2c0c557b, type: 3}
-      propertyPath: m_Controller
-      value: 
-      objectReference: {fileID: 9100000, guid: eb79e3fd0dd669f40a90a984b92a0ccf, type: 2}
     - target: {fileID: 4408529143413910281, guid: d6d06c887a1aae94f8c6e8cc2c0c557b, type: 3}
       propertyPath: m_Layer
       value: 6
@@ -1080,19 +1087,3 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 1, z: 0}
---- !u!54 &1005537926
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1005537921}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0

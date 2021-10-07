@@ -1,12 +1,9 @@
-Shader "Unlit/DrawTracks"
+Shader "Unlit/ImagePersistence"
 {
     Properties
     {
         _MainTex ("Texture", 2D) = "white" {}
-        _Coordinate ("Coordinate", vector) = (0,0,0,0)
-        _Color("Draw Color", Color) = (1,0,0,0)
-        _Size("Size", Range(1, 500)) = 1
-        _Strength("Strength", Range(0,1)) = 1
+        _ExistingTexture ("Texture", 2D) = "white" {}
     }
     SubShader
     {
@@ -18,6 +15,8 @@ Shader "Unlit/DrawTracks"
             CGPROGRAM
             #pragma vertex vert
             #pragma fragment frag
+            // make fog work
+            #pragma multi_compile_fog
 
             #include "UnityCG.cginc"
 
@@ -34,26 +33,32 @@ Shader "Unlit/DrawTracks"
             };
 
             sampler2D _MainTex;
+            sampler2D _ExistingTexture;
             float4 _MainTex_ST;
-            fixed4 _Coordinate, _Color;
-            half _Size, _Strength;
-            sampler2D _CameraDepthTexture;
+            float4 _ExistingTexture_ST;
 
             v2f vert (appdata v)
             {
                 v2f o;
                 o.vertex = UnityObjectToClipPos(v.vertex);
                 o.uv = TRANSFORM_TEX(v.uv, _MainTex);
+
                 return o;
             }
 
             fixed4 frag (v2f i) : SV_Target
             {
                 // sample the texture
-                fixed4 col = tex2D(_MainTex, i.uv);
-                float draw = pow(saturate(1 - distance(i.uv, _Coordinate.xy)), (500 / _Size));
-                fixed4 drawCol = _Color * (draw * _Strength);
-                return saturate(col  + drawCol);
+       
+                fixed4 persistentCol = tex2D(_ExistingTexture, i.uv);
+
+                fixed4 mainCol = tex2D(_MainTex, i.uv);
+
+                fixed4 col = fixed4(persistentCol.r + mainCol.r, 0, 0, 0);  
+                
+ 
+                return col;
+
             }
             ENDCG
         }

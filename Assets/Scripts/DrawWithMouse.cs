@@ -8,13 +8,13 @@ public class DrawWithMouse : MonoBehaviour
     public Camera _camera;
     public Shader _drawShader;
 
-    private RenderTexture _splatMap, _HeightMap;
+    private RenderTexture _splatMap;
     private Material _snowMaterial, _drawMaterial;
 
     [Range(1,500)]
-    public float _brushSize, _hillOffset;
+    public float _brushSize;
     [Range(0, 1)]
-    public float _brushStrength, _brushStrength2;
+    public float _brushStrength;
 
     private RaycastHit _hit;
 
@@ -23,7 +23,6 @@ public class DrawWithMouse : MonoBehaviour
     {
         _drawMaterial = new Material(_drawShader);
         _drawMaterial.SetVector("_Color", Color.red);
-        _drawMaterial.SetVector("_SecondColor", Color.green);
 
         _snowMaterial = GetComponent<MeshRenderer>().material;
         _splatMap = new RenderTexture(1024, 1024, 0, RenderTextureFormat.ARGBFloat);
@@ -40,8 +39,6 @@ public class DrawWithMouse : MonoBehaviour
                 _drawMaterial.SetVector("_Coordinate", new Vector4(_hit.textureCoord.x, _hit.textureCoord.y, 0, 0));
 
                 _drawMaterial.SetFloat("_Strength", _brushStrength);
-                _drawMaterial.SetFloat("_SecondStrength", _brushStrength2);
-                _drawMaterial.SetFloat("_HillOffset", _hillOffset);
                 _drawMaterial.SetFloat("_Size", _brushSize);
 
                 RenderTexture temp = RenderTexture.GetTemporary(_splatMap.width, _splatMap.height, 0, RenderTextureFormat.ARGBFloat);
@@ -55,6 +52,5 @@ public class DrawWithMouse : MonoBehaviour
     private void OnGUI()
     {
         GUI.DrawTexture(new Rect(0, 0, 256, 256), _splatMap, ScaleMode.ScaleToFit, false, 1);
-        GUI.DrawTexture(new Rect(256, 0, 256, 256), _HeightMap, ScaleMode.ScaleToFit, false, 1);
     }
 }

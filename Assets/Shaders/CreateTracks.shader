@@ -1,15 +1,14 @@
-Shader "Unlit/DrawTracks"
+Shader "Unlit/CreateTracks"
 {
     Properties
     {
         _MainTex ("Texture", 2D) = "white" {}
-        _Coordinate ("Coordinate", vector) = (0,0,0,0)
         _Color("Draw Color", Color) = (1,0,0,0)
-        _Size("Size", Range(1, 500)) = 1
-        _Strength("Strength", Range(0,1)) = 1
     }
     SubShader
     {
+        // No culling or depth
+		Cull Off ZWrite Off ZTest Always
         Tags { "RenderType"="Opaque" }
         LOD 100
 
@@ -34,10 +33,10 @@ Shader "Unlit/DrawTracks"
             };
 
             sampler2D _MainTex;
+            fixed4 _Color;
             float4 _MainTex_ST;
-            fixed4 _Coordinate, _Color;
-            half _Size, _Strength;
-            sampler2D _CameraDepthTexture;
+            sampler2D _CameraDepthNormalsTexture;
+ 
 
             v2f vert (appdata v)
             {
@@ -49,11 +48,14 @@ Shader "Unlit/DrawTracks"
 
             fixed4 frag (v2f i) : SV_Target
             {
-                // sample the texture
-                fixed4 col = tex2D(_MainTex, i.uv);
-                float draw = pow(saturate(1 - distance(i.uv, _Coordinate.xy)), (500 / _Size));
-                fixed4 drawCol = _Color * (draw * _Strength);
-                return saturate(col  + drawCol);
+                fixed4 col = tex2D(_MainTex, i.uv); // get existing values
+
+                float4 NormalDepth;
+ 
+                DecodeDepthNormal(tex2D(_CameraDepthNormalsTexture, i.uv), NormalDepth.w, NormalDepth.xyz);
+                col.rgb = 1 - NormalDepth.w; // set color according to the depth width
+
+                return (col * _Color);
             }
             ENDCG
         }
