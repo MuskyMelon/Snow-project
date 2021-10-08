@@ -21,14 +21,8 @@ public class CameraScript : MonoBehaviour
 
     private void OnRenderImage(RenderTexture source, RenderTexture destination)
     {
-        if (currentTime >= 1f / regenPerSecond)
-        {
-            _tempMaterial.SetInteger("isRegening", 1);
-            currentTime = 0;
-        } else
-        {
-            _tempMaterial.SetInteger("isRegening", 0);
-        }
+        _tempMaterial.SetInteger("isRegening", (currentTime >= 1f / regenPerSecond) ? 1 : 0);
+        currentTime = (currentTime >= 1f / regenPerSecond) ? currentTime : 0;
 
         Graphics.Blit(source, destination, _tempMaterial);
         Graphics.Blit(tempTex, persistentTex);
@@ -40,11 +34,6 @@ public class CameraScript : MonoBehaviour
         cam = GetComponent<Camera>();
         cam.depthTextureMode = DepthTextureMode.DepthNormals;
         Shader.SetGlobalFloat("_OrthographicCamSize", cam.orthographicSize);
-
-        // make textures
-        //tempTex = new RenderTexture(256, 256, 16, RenderTextureFormat.ARGB32);
-        //persistentTex = new RenderTexture(256, 256, 16, RenderTextureFormat.ARGB32);
-
         cam.targetTexture = tempTex;
 
         // shader to make it red
@@ -54,18 +43,17 @@ public class CameraScript : MonoBehaviour
         _tempMaterial.SetFloat("snowIncrease", (float)System.Math.Round(1d / ((double)timeInSecForSnowToGenerate * (double)regenPerSecond), 3));
         timer = (_tempMaterial.GetFloat("snowIncrease"));
       
-
+        // update the persistent texture
         Graphics.Blit(tempTex, persistentTex);
 
         // apply to the snow shader
         _snowMaterial = target.GetComponent<MeshRenderer>().material;
         _snowMaterial.SetTexture("_Splat", tempTex);
-
     }
 
     private void Update()
     {
-        currentTime += Time.deltaTime;
+        
         transform.position = new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z);
         _tempMaterial.SetTexture("_snowIncrease", persistentTex);
         
@@ -73,6 +61,8 @@ public class CameraScript : MonoBehaviour
 
     private void FixedUpdate()
     {
+
+        currentTime += Time.fixedDeltaTime;
         transform.position = new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z);
         _tempMaterial.SetTexture("_snowIncrease", persistentTex);
 
@@ -83,6 +73,6 @@ public class CameraScript : MonoBehaviour
     private void OnGUI()
     {
         GUI.DrawTexture(new Rect(0, 0, 256, 256), tempTex, ScaleMode.ScaleToFit, false, 1);
-        GUI.DrawTexture(new Rect(256, 0, 256, 256), persistentTex, ScaleMode.ScaleToFit, false, 1);
+        //GUI.DrawTexture(new Rect(256, 0, 256, 256), persistentTex, ScaleMode.ScaleToFit, false, 1);
     }
 }

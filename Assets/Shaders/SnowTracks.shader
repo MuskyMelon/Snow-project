@@ -11,7 +11,6 @@ Shader "Custom/SnowTracks"
         _Tess ("Tesselation", Range(1,32)) = 4
         _Splat ("SplatMap", 2D) = "black" {}
         _Displacement  ("Displacement", Range(0, 1.0)) = 0.3
-        _Displacement2  ("Displacement2", Range(0, 1.0)) = 0.3
    
         _Glossiness ("Smoothness", Range(0,1)) = 0.5
         _Metallic ("Metallic", Range(0,1)) = 0.0
@@ -43,21 +42,15 @@ Shader "Custom/SnowTracks"
         }
 
         sampler2D _Splat;
-        float _Displacement, _Displacement2;
+        float _Displacement;
 
         void disp (inout appdata v)
         {
             float4 coordinate = tex2Dlod(_Splat, float4(v.texcoord.xy,0,0));
 
             float d = coordinate.r * _Displacement; // snow grooves
-            float d2 = (coordinate.g - coordinate.r) * _Displacement2;
-
-            v.vertex.xyz -= v.normal * d;
-            if(d2 > 0) {
-                v.vertex.xyz += v.normal * d2 + (v.normal * d);
-            }
-           
-            v.vertex.xyz += v.normal * _Displacement; // change the vertex position
+            v.vertex.xyz -= v.normal * d; // displacement to lower the footsteps
+            v.vertex.xyz += v.normal * _Displacement; // raise so you can walk inside the snow
         }
 
         sampler2D _GroundTex, _SnowTex;
@@ -86,6 +79,7 @@ Shader "Custom/SnowTracks"
             half amount = tex2Dlod(_Splat, float4(IN.uv_Splat.xy,0,0)).r;
             //fixed4 c = tex2D (_MainTex, IN.uv_MainTex) * _Color;
             fixed4 c = lerp(tex2D (_SnowTex, IN.uv_SnowTex) * _SnowColor, tex2D (_GroundTex, IN.uv_GroundTex) * _GroundColor, amount);
+
             o.Albedo = c.rgb;
             // Metallic and smoothness come from slider variables
             o.Metallic = _Metallic;
