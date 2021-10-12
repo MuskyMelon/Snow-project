@@ -5,6 +5,7 @@ using UnityEngine;
 public class CharacterMovement : MonoBehaviour
 {
     private CharacterController controller;
+    private Animator animator;
     private Vector3 playerVelocity;
     private bool groundedPlayer;
     private float playerSpeed = 2.0f;
@@ -14,6 +15,7 @@ public class CharacterMovement : MonoBehaviour
     private void Start()
     {
         controller = gameObject.GetComponent<CharacterController>();
+        animator = gameObject.GetComponent<Animator>();
     }
 
     void Update()
@@ -38,7 +40,13 @@ public class CharacterMovement : MonoBehaviour
             playerVelocity.y += Mathf.Sqrt(jumpHeight * -3.0f * gravityValue);
         }
 
+
+        animator.SetFloat("Speed", move.magnitude);
+        //print(animator.GetFloat("speed"));  
+        
+
         playerVelocity.y += gravityValue * Time.deltaTime;
         controller.Move(playerVelocity * Time.deltaTime);
+       
     }
 }
