@@ -10,28 +10,21 @@ public class PerlinNoise : MonoBehaviour
     public float xOrg, yOrg;
 
     public Texture2D noiseTexture;
-    public Renderer rend;
+    public Material mat;
     public Material perlinMaterial;
-    public Shader heightShader;
     private Color[] pix;
 
     // Start is called before the first frame update
     void Start()
     {
-        print(pixWidth);
         noiseTexture = new Texture2D(pixWidth, pixHeight);
 
         pix = new Color[pixWidth * pixHeight];
 
-        rend = this.GetComponent<Renderer>();
+        mat = this.GetComponent<Renderer>().material;
         Noise();
 
-        perlinMaterial = new Material(heightShader);
-        perlinMaterial.SetTexture("_DispTex", noiseTexture);
-        perlinMaterial.SetTexture("_MainTex", noiseTexture);
-
-        rend.material = perlinMaterial;
-
+        mat.SetTexture("_PerlinTex", noiseTexture);
     }
 
     void Noise()
