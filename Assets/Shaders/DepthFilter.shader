@@ -65,7 +65,6 @@ Shader "Unlit/DepthFilter"
                    if(persistentCol.b < 0) persistentCol.r = 0;
                 }
 
-
                 newColors.r = max(persistentCol.r, newColors.r);
              
                 return newColors;

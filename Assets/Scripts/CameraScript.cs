@@ -53,21 +53,17 @@ public class CameraScript : MonoBehaviour
 
     private void Update()
     {
-        
         transform.position = new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z);
         _tempMaterial.SetTexture("_snowIncrease", persistentTex);
-        
     }
 
     private void FixedUpdate()
     {
-
         currentTime += Time.fixedDeltaTime;
         transform.position = new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z);
         _tempMaterial.SetTexture("_snowIncrease", persistentTex);
-
-        
-
+        target.GetComponent<Mesh>().RecalculateNormals();
+        target.GetComponent<Mesh>().RecalculateTangents();
     }
 
     private void OnGUI()
