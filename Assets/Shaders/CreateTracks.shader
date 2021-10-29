@@ -52,7 +52,7 @@ Shader "Unlit/CreateTracks"
 
                 float4 NormalDepth;
  
-                DecodeDepthNormal(tex2D(_CameraDepthNormalsTexture, i.uv), NormalDepth.w, NormalDepth.xyz);
+                DecodeDepthNormal(tex2D(_CameraDepthNormalsTexture, i.uv), NormalDepth.w, NormalDepth.xyz); // get depth from the camera
                 col.rgb = 1 - NormalDepth.w; // set color according to the depth width
 
                 return (col * _Color);

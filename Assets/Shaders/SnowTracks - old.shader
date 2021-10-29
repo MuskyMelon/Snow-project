@@ -1,4 +1,4 @@
-Shader "Custom/SnowTracks"
+Shader "Custom/SnowTracksOld"
 {
     Properties
     {
@@ -154,7 +154,7 @@ Shader "Custom/SnowTracks"
 
             //fixed4 c = tex2D (_MainTex, IN.uv_MainTex) * _Color;
 
-            float amount =  getSmoothDepth(IN.uv_Splat.xy);
+            float amount = getSmoothDepth(IN.uv_Splat.xy);
             fixed4 texC;
             if(amount > 1 - _textureDepthOffset) {
                 amount -= 1 - _textureDepthOffset;
@@ -171,7 +171,7 @@ Shader "Custom/SnowTracks"
 
             o.Normal += amount;
             o.Normal = UnpackNormal( tex2D(_NormalMap, IN.uv_NormalMap) );
-
+             o.Albedo = (0, 0, 0, amount);
         }
         ENDCG
     }

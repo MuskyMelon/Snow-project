@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: SnowTracks2
-  m_Shader: {fileID: 4800000, guid: daabeec3cc2e2ed4e931b8dbec26b93e, type: 3}
+  m_Name: SnowTracksFinal
+  m_Shader: {fileID: 4800000, guid: 844a783d4ce66904d8dd75e3b950ad89, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -86,31 +86,26 @@ Material:
     - _GlossMapScale: 1
     - _Glossiness: 0
     - _GlossyReflections: 1
-    - _ImageWidth: 0
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.02
     - _PerlinDisplacement: 1
     - _Phong: 0.5
-    - _Rounding: 0.3
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
-    - _Tess: 10
     - _UVSec: 0
     - _ZWrite: 1
-    - _groundOffset: 0.2
+    - _objectSize: 0.3
+    - _offset: 0.03
     - _size: 6
     - _textureDepthOffset: 0.5
     - _toggleBlur: 1
     - _toggleEdgeBlur: 0
-    - _toggleSnow: 0
-    - uvOffset: 0
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _GroundColor: {r: 0.40392157, g: 0.28627452, b: 0.16078432, a: 1}
     - _SnowColor: {r: 1, g: 1, b: 1, a: 1}
-    - _specular: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []

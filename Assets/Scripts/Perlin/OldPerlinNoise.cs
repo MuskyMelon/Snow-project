@@ -18,7 +18,6 @@ public class OldPerlinNoise : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        print(pixWidth);
         noiseTexture = new Texture2D(pixWidth, pixHeight);
 
         pix = new Color[pixWidth * pixHeight];
@@ -31,7 +30,6 @@ public class OldPerlinNoise : MonoBehaviour
         perlinMaterial.SetTexture("_MainTex", noiseTexture);
 
         rend.material = perlinMaterial;
-
     }
 
     void Noise()

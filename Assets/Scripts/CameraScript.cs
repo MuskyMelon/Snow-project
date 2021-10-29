@@ -49,6 +49,8 @@ public class CameraScript : MonoBehaviour
         // apply to the snow shader
         _snowMaterial = target.GetComponent<MeshRenderer>().material;
         _snowMaterial.SetTexture("_Splat", tempTex);
+        print(target.GetComponent<Renderer>().bounds.size.x);
+        _snowMaterial.SetFloat("_objectSize", target.GetComponent<Renderer>().bounds.size.x / tempTex.width);
     }
 
     private void Update()
@@ -62,8 +64,6 @@ public class CameraScript : MonoBehaviour
         currentTime += Time.fixedDeltaTime;
         transform.position = new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z);
         _tempMaterial.SetTexture("_snowIncrease", persistentTex);
-        target.GetComponent<Mesh>().RecalculateNormals();
-        target.GetComponent<Mesh>().RecalculateTangents();
     }
 
     private void OnGUI()

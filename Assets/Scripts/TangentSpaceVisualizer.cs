@@ -40,7 +40,11 @@ public class TangentSpaceVisualizer : MonoBehaviour
 	{
 		vertex += normal * offset;
 		Vector3 binormal = Vector3.Cross(normal, tangent) * binormalSign;
+		Vector3 bitangent = Vector3.Cross(normal, tangent);
 		Gizmos.color = Color.blue;
+		Gizmos.DrawLine(vertex, vertex + bitangent * scale);
+
+		Gizmos.color = Color.black;
 		Gizmos.DrawLine(vertex, vertex + binormal * scale);
 
 		Gizmos.color = Color.green;
