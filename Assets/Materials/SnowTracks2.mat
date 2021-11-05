@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: SnowTracks2
-  m_Shader: {fileID: 4800000, guid: daabeec3cc2e2ed4e931b8dbec26b93e, type: 3}
+  m_Shader: {fileID: 4800000, guid: 5f3aef26b8adc6e468a7a156b194f6aa, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -80,7 +80,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SnowNormalMap:
-        m_Texture: {fileID: 2800000, guid: 1c543c9c3718317409a3df6d609957a2, type: 3}
+        m_Texture: {fileID: 2800000, guid: 9f21e92389b571640a2c009a43b8c153, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SnowTex:
@@ -88,11 +88,19 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Splat:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 8400000, guid: b53fa44517b1fda44a049aab7b29345d, type: 2}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _edgeNormals:
         m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _edgesNormalMap:
+        m_Texture: {fileID: 2800000, guid: 1c543c9c3718317409a3df6d609957a2, type: 3}
+        m_Scale: {x: 10, y: 10}
+        m_Offset: {x: 0, y: 0}
+    - _snowDisp:
+        m_Texture: {fileID: 2800000, guid: 10fd429cf0d5fa04f81447eac18377f5, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Ints: []
@@ -122,9 +130,12 @@ Material:
     - _UVSec: 0
     - _ZWrite: 1
     - __Threshold: 0
+    - _edgeDispStrength: 0.051
+    - _edgeDisplacement: 0.117
     - _groundOffset: 0.2
     - _size: 6
     - _smoother: 0
+    - _snowDispStrength: 0.066
     - _textureDepthOffset: 0.694
     - _toggleBlur: 1
     - _toggleEdgeBlur: 0

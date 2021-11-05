@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CameraScript : MonoBehaviour
 {
-    public RenderTexture tempTex, persistentTex;
+    public RenderTexture tempTex, persistentTex, renderTemp;
 
     [SerializeField]
     Transform target;
@@ -15,6 +15,8 @@ public class CameraScript : MonoBehaviour
     public int regenPerSecond = 3;
     public float timer = 0;
     private float currentTime = 0;
+    public int blurLevel = 1;
+    public int edgeWidth = 1;
 
     public Camera cam;
     // Start is called before the first frame update
@@ -24,14 +26,27 @@ public class CameraScript : MonoBehaviour
         //_tempMaterial.SetInteger("isRegening", (currentTime >= 1f / regenPerSecond) ? 1 : 0);
         //currentTime = (currentTime >= 1f / regenPerSecond) ? currentTime : 0;
 
-        Graphics.Blit(source, tempTex, _tempMaterial, 0);
-        Graphics.Blit(tempTex, persistentTex);
-        Graphics.Blit(persistentTex, destination, _tempMaterial, 1);
-        Graphics.Blit(tempTex, persistentTex);
+        //********OLD********//
+        /*Graphics.Blit(source, destination, _tempMaterial, 0);
+        Graphics.Blit(tempTex, persistentTex);*/
+
+        renderTemp = RenderTexture.GetTemporary(tempTex.width, tempTex.height);
+
+        Graphics.Blit(source, destination, _tempMaterial, 0);
+        Graphics.Blit(tempTex, persistentTex); 
+
+        Graphics.Blit(persistentTex, renderTemp, _tempMaterial, 1);
+        Graphics.Blit(renderTemp, destination, _tempMaterial, 2);
+
+        RenderTexture.ReleaseTemporary(renderTemp);
+
     }
 
     void Awake()
     {
+
+        
+
         // set camera mode
         cam = GetComponent<Camera>();
         cam.depthTextureMode = DepthTextureMode.DepthNormals;
@@ -64,6 +79,8 @@ public class CameraScript : MonoBehaviour
 
     private void FixedUpdate()
     {
+        _tempMaterial.SetInt("_BlurLevel", blurLevel);
+        _tempMaterial.SetInt("_EdgeWidth", edgeWidth);
         currentTime += Time.fixedDeltaTime;
         transform.position = new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z);
         _tempMaterial.SetTexture("_snowIncrease", persistentTex);
@@ -72,6 +89,6 @@ public class CameraScript : MonoBehaviour
     private void OnGUI()
     {
         GUI.DrawTexture(new Rect(0, 0, 256, 256), tempTex, ScaleMode.ScaleToFit, false, 1);
-        GUI.DrawTexture(new Rect(256, 0, 256, 256), persistentTex, ScaleMode.ScaleToFit, false, 1);
+        //GUI.DrawTexture(new Rect(512, 0, 256, 256), persistentTex, ScaleMode.ScaleToFit, false, 1);
     }
 }
