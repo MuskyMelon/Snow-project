@@ -9,7 +9,7 @@ public class CameraScript : MonoBehaviour
     [SerializeField]
     Transform target;
 
-    public Shader _drawShader, _persistentShader;
+    public Shader _drawShader;
     public Material _tempMaterial, _snowMaterial, _drawMaterial;
     public int timeInSecForSnowToGenerate = 20;
     public int regenPerSecond = 3;
@@ -21,10 +21,12 @@ public class CameraScript : MonoBehaviour
 
     private void OnRenderImage(RenderTexture source, RenderTexture destination)
     {
-        _tempMaterial.SetInteger("isRegening", (currentTime >= 1f / regenPerSecond) ? 1 : 0);
-        currentTime = (currentTime >= 1f / regenPerSecond) ? currentTime : 0;
+        //_tempMaterial.SetInteger("isRegening", (currentTime >= 1f / regenPerSecond) ? 1 : 0);
+        //currentTime = (currentTime >= 1f / regenPerSecond) ? currentTime : 0;
 
-        Graphics.Blit(source, destination, _tempMaterial);
+        Graphics.Blit(source, tempTex, _tempMaterial, 0);
+        Graphics.Blit(tempTex, persistentTex);
+        Graphics.Blit(persistentTex, destination, _tempMaterial, 1);
         Graphics.Blit(tempTex, persistentTex);
     }
 
@@ -38,9 +40,12 @@ public class CameraScript : MonoBehaviour
 
         // shader to make it red
         _tempMaterial = new Material(_drawShader);
+
+        // set variables
         _tempMaterial.SetVector("_Color", Color.red);
         _tempMaterial.SetTexture("_ExistingTexture", persistentTex);
         _tempMaterial.SetFloat("snowIncrease", (float)System.Math.Round(1d / ((double)timeInSecForSnowToGenerate * (double)regenPerSecond), 3));
+
         timer = (_tempMaterial.GetFloat("snowIncrease"));
       
         // update the persistent texture
@@ -49,8 +54,6 @@ public class CameraScript : MonoBehaviour
         // apply to the snow shader
         _snowMaterial = target.GetComponent<MeshRenderer>().material;
         _snowMaterial.SetTexture("_Splat", tempTex);
-        print(target.GetComponent<Renderer>().bounds.size.x);
-        _snowMaterial.SetFloat("_objectSize", target.GetComponent<Renderer>().bounds.size.x / tempTex.width);
     }
 
     private void Update()
@@ -69,6 +72,6 @@ public class CameraScript : MonoBehaviour
     private void OnGUI()
     {
         GUI.DrawTexture(new Rect(0, 0, 256, 256), tempTex, ScaleMode.ScaleToFit, false, 1);
-        //GUI.DrawTexture(new Rect(256, 0, 256, 256), persistentTex, ScaleMode.ScaleToFit, false, 1);
+        GUI.DrawTexture(new Rect(256, 0, 256, 256), persistentTex, ScaleMode.ScaleToFit, false, 1);
     }
 }

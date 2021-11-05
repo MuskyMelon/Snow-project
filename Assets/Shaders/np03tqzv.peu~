@@ -135,11 +135,13 @@ Shader "Custom/SnowTracksOld"
 
             float d = (d2 + _Displacement) * trackDepth; // depth of tracks
 
+            borderHeight = _DisplacementTextureDisp;
+
 
             v.vertex.xyz -= v.normal * d; // apply displacement to lower the footsteps
             v.vertex.xyz += v.normal * (_Displacement + d2); // raise so you can walk inside the snow 
 
-            
+            v.vertex.xyz += v.normal * 
 
             // displacement edges
             if(_Displacement + d2 - d < _Displacement + d2 && _Displacement + d2 - d >  1 - _textureDepthOffset) {

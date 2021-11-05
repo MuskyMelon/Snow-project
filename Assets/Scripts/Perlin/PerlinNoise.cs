@@ -47,6 +47,6 @@ public class PerlinNoise : MonoBehaviour
 
     private void OnGUI()
     {
-        GUI.DrawTexture(new Rect(256, 0, 256, 256), noiseTexture, ScaleMode.ScaleToFit, false, 1);
+        //GUI.DrawTexture(new Rect(256, 0, 256, 256), noiseTexture, ScaleMode.ScaleToFit, false, 1);
     }
 }

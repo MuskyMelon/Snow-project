@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: SnowTracks2
-  m_Shader: {fileID: 4800000, guid: daabeec3cc2e2ed4e931b8dbec26b93e, type: 3}
+  m_Name: test
+  m_Shader: {fileID: 4800000, guid: 670c2d8dae4e1024589af1c7b752dac4, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -20,7 +20,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _BumpMap:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: c9712a9096e2dba4d8391143f97590a0, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DetailAlbedoMap:
@@ -35,24 +35,12 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _DetailedSnowMap:
-        m_Texture: {fileID: 2800000, guid: 1c543c9c3718317409a3df6d609957a2, type: 3}
-        m_Scale: {x: 100, y: 100}
-        m_Offset: {x: 0, y: 0}
-    - _DirtNormalMap:
-        m_Texture: {fileID: 2800000, guid: 0afa3b9fba01b0541b802fa706e5e962, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _DispTex:
-        m_Texture: {fileID: 2800000, guid: ba072822be29c77468f858def72de242, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
     - _EmissionMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _GroundTex:
-        m_Texture: {fileID: 2800000, guid: 6e47cb82df8e4b5489432827c3363b57, type: 3}
+    - _HeightMap:
+        m_Texture: {fileID: 2800000, guid: 236a2aff937c17547bb89f7ecebb79fe, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
@@ -63,10 +51,6 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _NormalMap:
-        m_Texture: {fileID: 2800000, guid: 1c543c9c3718317409a3df6d609957a2, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -75,23 +59,35 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _PerlinTex:
+    - _TexA1:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _SnowNormalMap:
-        m_Texture: {fileID: 2800000, guid: 1c543c9c3718317409a3df6d609957a2, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _SnowTex:
-        m_Texture: {fileID: 10307, guid: 0000000000000000f000000000000000, type: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _Splat:
+    - _TexA2:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _edgeNormals:
+    - _TexB1:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _TexB2:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _TexC1:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _TexC2:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _TexD1:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _TexD2:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -100,40 +96,21 @@ Material:
     - _BumpScale: 1
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
-    - _Displacement: 0.075
-    - _DisplacementTextureDisp: 0.074
     - _DstBlend: 0
-    - _EdgeLength: 5
     - _GlossMapScale: 1
-    - _Glossiness: 0
+    - _Glossiness: 0.5
     - _GlossyReflections: 1
-    - _ImageWidth: 0
+    - _Height: 0.005
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.02
-    - _PerlinDisplacement: 1
-    - _Phong: 0.5
-    - _Rounding: 0.3
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
-    - _Tess: 10
     - _UVSec: 0
     - _ZWrite: 1
-    - __Threshold: 0
-    - _groundOffset: 0.2
-    - _size: 6
-    - _smoother: 0
-    - _textureDepthOffset: 0.694
-    - _toggleBlur: 1
-    - _toggleEdgeBlur: 0
-    - _toggleSnow: 0
-    - uvOffset: 0
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _GroundColor: {r: 0.88235295, g: 0.9372549, b: 1, a: 1}
-    - _SnowColor: {r: 1, g: 1, b: 1, a: 1}
-    - _specular: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []
